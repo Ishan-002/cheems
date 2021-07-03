@@ -20,7 +20,7 @@ module.exports = function validateRegistrationData(data) {
       errors.email = 'Please enter a valid email';
     }
   } else {
-    error.email = 'Email cannot be empty';
+    errors.email = 'Email cannot be empty';
   }
 
   // Password checks
@@ -30,7 +30,7 @@ module.exports = function validateRegistrationData(data) {
 
     if (!regex.test(data.password)) {
       errors.password =
-        'PasswrodPassword must contain one lowercase, uppercase, numeric and special character. I should be more than 8 characters long';
+        'Password must contain one lowercase, uppercase, numeric and special character. I should be more than 8 characters long';
     }
   } else {
     errors.password = 'Password cannot be empty';
@@ -38,7 +38,7 @@ module.exports = function validateRegistrationData(data) {
 
   // Confirm password checks
   if (data.password2 != data.password) {
-    error.password2 = 'Both passwords must match';
+    errors.password2 = 'Both passwords must match';
   }
 
   // Check if errors are there or not
@@ -46,7 +46,7 @@ module.exports = function validateRegistrationData(data) {
   if (Object.keys(errors).length === 0) {
     valid = true;
   }
-
+  console.log(errors);
   return {
     errors,
     isValid: valid,

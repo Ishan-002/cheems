@@ -1,33 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React, { useContext } from 'react';
+import logo from './logo.png';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Login from './components/auth/login';
+import Register from './components/auth/register';
+import { createBrowserHistory } from 'history';
+import withAuth from './components/withAuth';
+// import Home from './components/home';
+import Landing from './components/landing/landing';
+import Home from './components/home/home';
+import { GetUser } from './utils/getUser';
+import { store } from './store/store';
+
+const history = createBrowserHistory();
 
 function App() {
-  const [data, setData] = React.useState(null);
-
-  React.useEffect(() => {
-    fetch(`/api/greeting`)
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
+  GetUser();
+  const user = useContext(store);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p> {!data ? 'Loading...' : data}</p>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          {user.login ? <Home /> : <Landing />}
+        </Route>
+        {/* <img src={logo} className="App-logo" alt="logo" /> */}
+        <Route exact path="/login">
+          {user.login ? <Home /> : <Login />}
+        </Route>
+        <Route exact path="/register">
+          {user.login ? <Home /> : <Register />}
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
