@@ -15,13 +15,16 @@ const User = require('../models/User');
 // @access Public
 router.post('/register', (req, res) => {
   // Form validation
+  console.log('here');
   const { errors, isValid } = validateRegistration(req.body);
   // Check validation
+  console.log(isValid);
   if (!isValid) {
     return res.status(400).json(errors);
   }
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
+      console.log('email already used');
       return res.status(400).json({ email: 'This email is already used' });
     } else {
       const newUser = new User({
@@ -33,7 +36,10 @@ router.post('/register', (req, res) => {
       // Password hashing
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
+          if (err) {
+            console.log(err);
+            return res.status(500);
+          }
           newUser.password = hash;
           newUser
             .save()
@@ -84,9 +90,10 @@ router.post('/login', (req, res) => {
             expiresIn: 1200, // 20 minutes in seconds
           },
           (err, token) => {
-            res.json({
+            res.status(200).json({
               success: true,
-              token: 'Bearer ' + token,
+              token: token,
+              user: user,
             });
           }
         );
