@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const schema = mongoose.Schema;
 
-// const saltRounds = 10;
+const saltRounds = 10;
 
 const UserSchema = new schema({
   email: {
@@ -21,22 +21,22 @@ const UserSchema = new schema({
   },
 });
 
-// // Hashing password before storing it
-// UserSchema.pre('save', (next) => {
-//   if (this.isNew || this.isModified('password')) {
-//     const document = this;
-//     bcrypt.hash(document.password, saltRounds, (err, hashedPassword) => {
-//       if (err) {
-//         next(err);
-//       } else {
-//         document.password = hashedPassword;
-//         next();
-//       }
-//     });
-//   } else {
-//     next();
-//   }
-// });
+// Hashing password before storing it
+UserSchema.pre('save', function (next) {
+  if (this.isNew || this.isModified('password')) {
+    const document = this;
+    bcrypt.hash(document.password, saltRounds, (err, hashedPassword) => {
+      if (err) {
+        next(err);
+      } else {
+        document.password = hashedPassword;
+        next();
+      }
+    });
+  } else {
+    next();
+  }
+});
 
 // // checks if the entered password is same as the saved one
 // UserSchema.methods.isPasswordCorrect = (password, callback) => {

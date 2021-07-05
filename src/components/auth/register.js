@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom';
 import { RegisterUser } from '../../api/userApi';
 
 const Register = () => {
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const id = e.target.id;
     if (id == 'email') {
       setEmail(e.target.value);
-    } else if (id == 'name') {
-      setName(e.target.value);
+    } else if (id == 'username') {
+      setUsername(e.target.value);
     } else if (id == 'password') {
       setPassword(e.target.value);
     } else if (id == 'password2') {
@@ -25,11 +25,12 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newUser = {
-      name: name,
+      username: username,
       email: email,
       password: password,
       password2: password2,
     };
+    console.log(newUser);
     RegisterUser(newUser);
   };
 
@@ -53,9 +54,9 @@ const Register = () => {
             <div className="input-field col s12">
               <input
                 onChange={handleChange}
-                value={name}
-                error={errors.name}
-                id="name"
+                value={username}
+                //error={errors.name}
+                id="username"
                 type="text"
               />
               <label htmlFor="name">Name</label>
@@ -64,7 +65,7 @@ const Register = () => {
               <input
                 onChange={handleChange}
                 value={email}
-                error={errors.email}
+                //error={errors.email}
                 id="email"
                 type="email"
               />
@@ -74,7 +75,7 @@ const Register = () => {
               <input
                 onChange={handleChange}
                 value={password}
-                error={errors.password}
+                //error={errors.password}
                 id="password"
                 type="password"
               />
@@ -84,7 +85,7 @@ const Register = () => {
               <input
                 onChange={handleChange}
                 value={password2}
-                error={errors.password2}
+                //error={errors.password2}
                 id="password2"
                 type="password"
               />

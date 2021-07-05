@@ -1,10 +1,9 @@
-import { setCookie } from '../utils/handleCookies';
+import { removeCookie, setCookie } from '../utils/handleCookies';
 import { axiosInstance } from './axiosInstance';
-import { useHistory } from 'react-router';
 
 export function loginUserWithToken(token) {
   return axiosInstance
-    .get('/users', {
+    .get('/users/login', {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -13,34 +12,64 @@ export function loginUserWithToken(token) {
     })
     .then((response) => {
       const res = JSON.parse(response.request.response);
+      console.log(response);
+      console.log(res);
       return res;
     })
     .catch((error) => {
-      return Promise.reject(error);
+      throw error;
     });
 }
 
+// TODO: Use modals instead of alerts
 export function loginUser(user) {
   return axiosInstance
-    .post('/login', JSON.stringify(user))
+    .post('/users/login', JSON.stringify(user))
     .then((response) => {
-      const res = JSON.parse(response.data);
       console.log(response);
-      setCookie('token', res.token); // tbs
-    })
-    .catch(() => {});
-}
-
-export function RegisterUser(user) {
-  // console.log('eiw');
-  console.log(axiosInstance.defaults);
-  return axiosInstance
-    .post('/users/register', user)
-    .then((response) => {
-      alert('Registration successful, redirecting you to login page');
-      window.location.href = '/login';
+      const res = response.data;
+      if (response.status == 200) {
+        setCookie('token', res.token);
+        window.location.href = '/';
+      } else if (response.status == 400) {
+        if (res.error) {
+          alert(res.error);
+        } else {
+          alert('Bad request, please try again.');
+        }
+      } else if (response.status == 500) {
+        alert('There was some error with the server, please try again.');
+      }
     })
     .catch((error) => {
       console.log(error);
+    });
+}
+
+export function RegisterUser(user) {
+  return axiosInstance
+    .post('/users/register', user)
+    .then((response) => {
+      console.log('before');
+      console.log(response);
+      console.log('after');
+      // const res = JSON.parse(response.data);
+      if (response.status == 200) {
+        alert('Registration successful, redirecting you to login page');
+        window.location.href = '/login';
+      }
+    })
+    .catch((error) => {
+      const response = error.response;
+      const res = response.data;
+      if (response.status == 400) {
+        if (res.error) {
+          alert(res.error);
+        } else {
+          alert('Bad request, please try again.');
+        }
+      } else if (response.status == 500) {
+        alert('There was some error with the server, please try again.');
+      }
     });
 }

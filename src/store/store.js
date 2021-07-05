@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import Reducer from '../reducer/reducer';
 
 const initialState = {
   login: false,
@@ -6,32 +7,12 @@ const initialState = {
   email: '',
 };
 
-const store = createContext(initialState);
-
-const { Provider } = store;
-
-const StateProvider = ({ children }) => {
-  const [state, dispatch] = useReducer((state = initialState, action) => {
-    switch (action.type) {
-      case 'SET_USER':
-        return {
-          ...state,
-          login: true,
-          username: action.payload.username,
-          email: action.payload.email,
-        };
-      case 'RESET_APP':
-        return {
-          ...state,
-          login: false,
-          username: '',
-          email: '',
-        };
-      default:
-        return state;
-    }
-  }, initialState);
-  return <Provider value={{ state, dispatch }}>{children}</Provider>;
+const Store = ({ children }) => {
+  const [state, dispatch] = useReducer(Reducer, initialState);
+  return (
+    <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
+  );
 };
 
-export { store, StateProvider };
+export const Context = createContext(initialState);
+export default Store;
