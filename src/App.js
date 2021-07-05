@@ -1,34 +1,49 @@
 import './App.css';
-import React, { useContext } from 'react';
-import logo from './logo.png';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
-import { createBrowserHistory } from 'history';
-import withAuth from './components/withAuth';
-// import Home from './components/home';
 import Landing from './components/landing/landing';
 import Home from './components/home/home';
-import { GetUser } from './utils/getUser';
-import { store } from './store/store';
-
-const history = createBrowserHistory();
+import { loginUserWithToken } from './api/userApi';
+import { Context } from './store/store';
+import { getCookie, removeCookie } from './utils/handleCookies';
 
 function App() {
-  GetUser();
-  const user = useContext(store);
+  const [state, dispatch] = useContext(Context);
+
+  useEffect(() => {
+    const token = getCookie('token');
+    if (token) {
+      loginUserWithToken(token)
+        .then((res) => {
+          const user = {
+            username: res.user.username,
+            email: res.user.email,
+            login: true,
+          };
+          dispatch({ type: 'SET_USER', payload: user });
+        })
+        .catch(() => {
+          removeCookie('token');
+          dispatch({ type: 'RESET_APP' });
+        });
+    } else {
+      dispatch({ type: 'RESET_APP' });
+    }
+  }, []);
+
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          {user.login ? <Home /> : <Landing />}
+          {state.login ? <Home /> : <Landing />}
         </Route>
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <Route exact path="/login">
-          {user.login ? <Home /> : <Login />}
+          {state.login ? <Home /> : <Login />}
         </Route>
         <Route exact path="/register">
-          {user.login ? <Home /> : <Register />}
+          {state.login ? <Home /> : <Register />}
         </Route>
       </Switch>
     </Router>

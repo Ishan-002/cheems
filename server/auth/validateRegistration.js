@@ -2,13 +2,13 @@ module.exports = function validateRegistrationData(data) {
   let errors = {};
 
   // Name checks
-  if (data.name != '') {
+  if (data.username != '') {
     const regex = /^[a-zA-Z ,.'-]+$/i;
-    if (!regex.test(String(data.name))) {
-      errors.name = 'Please enter a valid name';
+    if (!regex.test(String(data.username))) {
+      errors.username = 'Please enter a valid username';
     }
   } else {
-    errors.name = 'Name cannot be empty';
+    errors.username = 'username cannot be empty';
   }
 
   // Email checks
@@ -46,7 +46,7 @@ module.exports = function validateRegistrationData(data) {
   if (Object.keys(errors).length === 0) {
     valid = true;
   }
-  console.log(errors);
+
   return {
     errors,
     isValid: valid,
