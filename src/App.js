@@ -1,33 +1,52 @@
-import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Login from './components/auth/login';
+import Register from './components/auth/register';
+import Landing from './components/landing/landing';
+import Home from './components/home/home';
+import { loginUserWithToken } from './api/userApi';
+import { Context } from './store/store';
+import { getCookie, removeCookie } from './utils/handleCookies';
 
 function App() {
-  const [data, setData] = React.useState(null);
+  const [state, dispatch] = useContext(Context);
 
-  React.useEffect(() => {
-    fetch(`/api/greeting`)
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
+  useEffect(() => {
+    const token = getCookie('token');
+    if (token) {
+      loginUserWithToken(token)
+        .then((res) => {
+          const user = {
+            username: res.user.username,
+            email: res.user.email,
+            login: true,
+          };
+          dispatch({ type: 'SET_USER', payload: user });
+        })
+        .catch(() => {
+          removeCookie('token');
+          dispatch({ type: 'RESET_APP' });
+        });
+    } else {
+      dispatch({ type: 'RESET_APP' });
+    }
   }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p> {!data ? 'Loading...' : data}</p>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          {state.login ? <Home /> : <Landing />}
+        </Route>
+        <Route exact path="/login">
+          {state.login ? <Home /> : <Login />}
+        </Route>
+        <Route exact path="/register">
+          {state.login ? <Home /> : <Register />}
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
