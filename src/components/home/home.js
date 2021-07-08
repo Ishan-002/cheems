@@ -1,14 +1,38 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Context } from '../../store/store';
+import VideoRoomComponent, { VideoComponent } from '../videoRoomComponent';
 
 const Home = () => {
+  const [inCall, setInCall] = useState(false);
+  const [user, dispatch] = useContext(Context);
+  const [sessionName, setSessionName] = useState(
+    'Session-' + Math.floor(Math.random() * 100)
+  );
   const enterCode = () => {
     let meetingCode = window.prompt('Enter the meeting code');
     console.log(meetingCode);
+    setSessionName(meetingCode);
+    setInCall(true);
   };
 
-  const createMeeting = () => {};
-  const [user, dispatch] = useContext(Context);
+  const leaveSession = () => {
+    setInCall(false);
+  };
+
+  const createMeeting = () => {
+    setInCall(true);
+  };
+
+  if (inCall) {
+    return (
+      <VideoRoomComponent
+        username={user.username}
+        sessionName={sessionName}
+        leaveSession={leaveSession}
+      />
+    );
+  }
+
   return (
     <div>
       <h1>Hello {user.username}</h1>
