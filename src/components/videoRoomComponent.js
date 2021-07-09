@@ -3,7 +3,6 @@ import { axiosInstance } from '../api/axiosInstance';
 import './videoRoomComponent.css';
 import { OpenVidu } from 'openvidu-browser';
 import StreamComponent from './stream/streamComponent';
-import DialogExtensionComponent from './dialog-extension/DialogExtension';
 import ChatComponent from './chat/chatComponent';
 import { Context } from '../store/store';
 
@@ -54,7 +53,6 @@ class VideoRoomComponent extends Component {
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
     this.screenShare = this.screenShare.bind(this);
     this.stopScreenShare = this.stopScreenShare.bind(this);
-    this.closeDialogExtension = this.closeDialogExtension.bind(this);
     this.toggleChat = this.toggleChat.bind(this);
     this.checkNotification = this.checkNotification.bind(this);
     this.checkSize = this.checkSize.bind(this);
@@ -434,10 +432,6 @@ class VideoRoomComponent extends Component {
     });
   }
 
-  closeDialogExtension() {
-    this.setState({ showExtensionDialog: false });
-  }
-
   stopScreenShare() {
     this.state.session.unpublish(localUser.getStreamManager());
     this.connectWebCam();
@@ -519,11 +513,6 @@ class VideoRoomComponent extends Component {
           toggleFullscreen={this.toggleFullscreen}
           leaveSession={this.leaveSession}
           toggleChat={this.toggleChat}
-        />
-
-        <DialogExtensionComponent
-          showDialog={this.state.showExtensionDialog}
-          cancelClicked={this.closeDialogExtension}
         />
 
         <div id="layout" className="bounds">
