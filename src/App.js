@@ -8,6 +8,18 @@ import Home from './components/home/home';
 import { loginUserWithToken } from './api/userApi';
 import { Context } from './store/store';
 import { getCookie, removeCookie } from './utils/handleCookies';
+import { loadTheme } from '@fluentui/react';
+import { ThemeOptions } from './themes';
+import { createTheme, ThemeProvider, makeStyles } from '@material-ui/core';
+
+const appTheme = createTheme(ThemeOptions);
+const useStyles = makeStyles({
+  root: {
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+  },
+});
 
 function App() {
   const [state, dispatch] = useContext(Context);
@@ -34,19 +46,21 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          {state.login ? <Home /> : <Landing />}
-        </Route>
-        <Route exact path="/login">
-          {state.login ? <Home /> : <Login />}
-        </Route>
-        <Route exact path="/register">
-          {state.login ? <Home /> : <Register />}
-        </Route>
-      </Switch>
-    </Router>
+    <ThemeProvider theme={appTheme}>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            {state.login ? <Home /> : <Landing />}
+          </Route>
+          <Route exact path="/login">
+            {state.login ? <Home /> : <Login />}
+          </Route>
+          <Route exact path="/register">
+            {state.login ? <Home /> : <Register />}
+          </Route>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 

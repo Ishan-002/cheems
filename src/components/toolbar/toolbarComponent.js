@@ -4,7 +4,7 @@ import './toolbarComponent.css';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import Mic from '@material-ui/icons/Mic';
+import MicIcon from '@material-ui/icons/Mic';
 import MicOff from '@material-ui/icons/MicOff';
 import Videocam from '@material-ui/icons/Videocam';
 import VideocamOff from '@material-ui/icons/VideocamOff';
@@ -14,8 +14,8 @@ import PictureInPicture from '@material-ui/icons/PictureInPicture';
 import ScreenShare from '@material-ui/icons/ScreenShare';
 import StopScreenShare from '@material-ui/icons/StopScreenShare';
 import Tooltip from '@material-ui/core/Tooltip';
-import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
-import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
+import CallEndIcon from '@material-ui/icons/CallEnd';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 
 import IconButton from '@material-ui/core/IconButton';
 
@@ -25,7 +25,7 @@ export default class ToolbarComponent extends Component {
     this.state = { fullscreen: false };
     this.camStatusChanged = this.camStatusChanged.bind(this);
     this.micStatusChanged = this.micStatusChanged.bind(this);
-    this.screenShare = this.screenShare.bind(this);
+    this.startScreenShare = this.startScreenShare.bind(this);
     this.stopScreenShare = this.stopScreenShare.bind(this);
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
@@ -40,7 +40,7 @@ export default class ToolbarComponent extends Component {
     this.props.camStatusChanged();
   }
 
-  screenShare() {
+  startScreenShare() {
     this.props.screenShare();
   }
 
@@ -67,20 +67,7 @@ export default class ToolbarComponent extends Component {
     return (
       <AppBar className="toolbar" id="header">
         <Toolbar className="toolbar">
-          <div id="navSessionInfo">
-            {/* <img
-                            id="header_img"
-                            alt="OpenVidu Logo"
-                            src={logo}
-                        /> */}
-
-            {this.props.sessionId && (
-              <div id="titleContent">
-                <span id="session-title">{mySessionId}</span>
-              </div>
-            )}
-          </div>
-
+          <div id="navSessionInfo">{mySessionId}</div>
           <div className="buttonsContent">
             <IconButton
               color="inherit"
@@ -89,7 +76,7 @@ export default class ToolbarComponent extends Component {
               onClick={this.micStatusChanged}
             >
               {localUser !== undefined && localUser.isAudioActive() ? (
-                <Mic />
+                <MicIcon />
               ) : (
                 <MicOff color="secondary" />
               )}
@@ -111,7 +98,7 @@ export default class ToolbarComponent extends Component {
             <IconButton
               color="inherit"
               className="navButton"
-              onClick={this.screenShare}
+              onClick={this.startScreenShare}
             >
               {localUser !== undefined && localUser.isScreenShareActive() ? (
                 <PictureInPicture />
@@ -143,7 +130,7 @@ export default class ToolbarComponent extends Component {
               onClick={this.leaveSession}
               id="navLeaveButton"
             >
-              <PowerSettingsNew />
+              <CallEndIcon />
             </IconButton>
             <IconButton
               color="inherit"
@@ -152,7 +139,7 @@ export default class ToolbarComponent extends Component {
             >
               {this.props.showNotification && <div id="point" className="" />}
               <Tooltip title="Chat">
-                <QuestionAnswer />
+                <ChatBubbleIcon />
               </Tooltip>
             </IconButton>
           </div>
