@@ -4,7 +4,7 @@ import Fab from '@material-ui/core/Fab';
 import HighlightOff from '@material-ui/icons/HighlightOff';
 import Send from '@material-ui/icons/Send';
 
-import './ChatComponent.css';
+import './chatComponent.css';
 import { Tooltip } from '@material-ui/core';
 
 export default class ChatComponent extends Component {

@@ -4,7 +4,7 @@ import './videoRoomComponent.css';
 import { OpenVidu } from 'openvidu-browser';
 import StreamComponent from './stream/streamComponent';
 import DialogExtensionComponent from './dialog-extension/DialogExtension';
-import ChatComponent from './chat/ChatComponent';
+import ChatComponent from './chat/chatComponent';
 import { Context } from '../store/store';
 
 import OpenViduLayout from '../layout/openvidu-layout';
