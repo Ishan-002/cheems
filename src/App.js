@@ -11,6 +11,8 @@ import { getCookie, removeCookie } from './utils/handleCookies';
 import { loadTheme } from '@fluentui/react';
 import { ThemeOptions } from './themes';
 import { createTheme, ThemeProvider, makeStyles } from '@material-ui/core';
+import SignIn from './components/auth/signIn';
+import SignUp from './components/auth/signUp';
 
 const appTheme = createTheme(ThemeOptions);
 const useStyles = makeStyles({
@@ -23,7 +25,7 @@ const useStyles = makeStyles({
 
 function App() {
   const [state, dispatch] = useContext(Context);
-
+  const classes = useStyles();
   useEffect(() => {
     const token = getCookie('token');
     if (token) {
@@ -46,17 +48,17 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={appTheme}>
+    <ThemeProvider theme={appTheme} className={classes.root}>
       <Router>
         <Switch>
           <Route exact path="/">
             {state.login ? <Home /> : <Landing />}
           </Route>
           <Route exact path="/login">
-            {state.login ? <Home /> : <Login />}
+            {state.login ? <Home /> : <SignIn />}
           </Route>
           <Route exact path="/register">
-            {state.login ? <Home /> : <Register />}
+            {state.login ? <Home /> : <SignUp />}
           </Route>
         </Switch>
       </Router>
