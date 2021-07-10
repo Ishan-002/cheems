@@ -100,7 +100,11 @@ export default class ChatComponent extends Component {
               {this.props.user.getStreamManager().stream.session.sessionId} -
               CHAT
             </span>
-            <IconButton id="closeButton" onClick={this.close}>
+            <IconButton
+              id="closeButton"
+              onClick={this.close}
+              disabled={!this.props.isLoaded}
+            >
               <HighlightOff color="secondary" />
             </IconButton>
           </div>
