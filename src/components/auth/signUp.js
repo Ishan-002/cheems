@@ -83,7 +83,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="username"
-                label="username"
+                label="Username"
                 name="username"
                 autoComplete="username"
                 value={username}

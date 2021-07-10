@@ -1,4 +1,4 @@
-import { AppBar } from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { useContext, useState } from 'react';
 import { Context } from '../../store/store';
 import VideoRoomComponent, { VideoComponent } from '../videoRoomComponent';
@@ -9,7 +9,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { removeCookie } from '../../utils/handleCookies';
 
 const Home = () => {
   const [inCall, setInCall] = useState(false);
@@ -46,7 +46,11 @@ const Home = () => {
       setInCall(true);
     }
   };
-
+  const handleLogout = () => {
+    removeCookie('token');
+    window.location.href = '/';
+  };
+  
   if (inCall) {
     return (
       <VideoRoomComponent
@@ -59,11 +63,41 @@ const Home = () => {
 
   return (
     <div>
+      <AppBar position="static">
+        <Toolbar id="toolbar">
+          <Typography variant="h4">Hi, {user.username}! </Typography>
+          <Button color="inherit" id="logout-button" onClick={handleLogout}>
+            Logout
+          </Button>
+        </Toolbar>
+      </AppBar>
       <div className="meeting-buttons">
-        <Button onClick={createMeeting}>Create a meeting</Button>
-        OR
+        <Button
+          onClick={createMeeting}
+          className="button"
+          color="secondary"
+          style={{
+            fontSize: '1.5rem',
+            textTransform: 'none',
+            background: '#383d48',
+            borderRadius: '10px',
+          }}
+        >
+          Create a meeting
+        </Button>
+
         <div>
-          <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+          <Button
+            style={{
+              fontSize: '1.5rem',
+              textTransform: 'none',
+              borderRadius: '10px',
+            }}
+            variant="outlined"
+            color="primary"
+            onClick={handleClickOpen}
+            className="button"
+          >
             Join a meeting
           </Button>
           <Dialog

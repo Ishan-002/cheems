@@ -8,3 +8,24 @@
   left: 20%;
   right: 20%;
 }
+
+.button {
+  /* height: 3rem; */
+  /* width: auto; */
+  font-size: 20rem;
+  box-shadow: 1px 1px 1px 1px #383d48;
+  font-family: 'Segoe UI';
+}
+
+#logout-button {
+  margin-right: 0;
+  right: 0;
+  /* padding-left: 85rem; */
+}
+
+#toolbar {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 0;
+  margin: 0; */
+}

@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar } from '@material-ui/core';
 import VideoCallImage from '../../assets/video-call.svg';
 import ChatImage from '../../assets/chat.svg';
 import UserProfileImage from '../../assets/user-profile.svg';
 import MeetingImage from '../../assets/team-meeting.svg';
 import './landing.css';
-// import Carousel from 'react-material-ui-carousel';
-// import GithubOctocat from '../../assets/github-octocat-ribbon.svg';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -42,12 +39,13 @@ const Landing = () => {
             <div className="col s5">
               <Link
                 to="/register"
+                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                 style={{
                   width: '150px',
                   borderRadius: '3px',
                   letterSpacing: '1.5px',
+                  fontFamily: 'Segoe UI',
                 }}
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
               >
                 Register
               </Link>
@@ -55,12 +53,13 @@ const Landing = () => {
             <div className="col s6">
               <Link
                 to="/login"
+                className="btn btn-large btn-flat waves-effect white black-text"
                 style={{
                   width: '150px',
                   borderRadius: '3px',
-                  letterSpacing: '1.5px',
+                  // letterSpacing: '1.5px',
+                  fontFamily: 'Segoe UI',
                 }}
-                className="btn btn-large btn-flat waves-effect white black-text"
               >
                 Log In
               </Link>

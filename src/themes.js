@@ -1,4 +1,7 @@
 export const ThemeOptions = {
+  typography: {
+    fontFamily: 'Segoe UI, Roboto, Helvetica, Arial, sans-serif',
+  },
   palette: {
     type: 'light',
     primary: {
