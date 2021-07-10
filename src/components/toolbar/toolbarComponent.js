@@ -74,6 +74,7 @@ export default class ToolbarComponent extends Component {
               className="navButton"
               id="navMicButton"
               onClick={this.micStatusChanged}
+              disabled={!this.props.isLoaded}
             >
               {localUser !== undefined && localUser.isAudioActive() ? (
                 <MicIcon />
@@ -87,6 +88,7 @@ export default class ToolbarComponent extends Component {
               className="navButton"
               id="navCamButton"
               onClick={this.camStatusChanged}
+              disabled={!this.props.isLoaded}
             >
               {localUser !== undefined && localUser.isVideoActive() ? (
                 <Videocam />
@@ -99,6 +101,7 @@ export default class ToolbarComponent extends Component {
               color="inherit"
               className="navButton"
               onClick={this.startScreenShare}
+              disabled={!this.props.isLoaded}
             >
               {localUser !== undefined && localUser.isScreenShareActive() ? (
                 <PictureInPicture />
@@ -108,7 +111,11 @@ export default class ToolbarComponent extends Component {
             </IconButton>
 
             {localUser !== undefined && localUser.isScreenShareActive() && (
-              <IconButton onClick={this.stopScreenShare} id="navScreenButton">
+              <IconButton
+                onClick={this.stopScreenShare}
+                id="navScreenButton"
+                disabled={!this.props.isLoaded}
+              >
                 <StopScreenShare color="secondary" />
               </IconButton>
             )}
@@ -117,6 +124,7 @@ export default class ToolbarComponent extends Component {
               color="inherit"
               className="navButton"
               onClick={this.toggleFullscreen}
+              disabled={!this.props.isLoaded}
             >
               {localUser !== undefined && this.state.fullscreen ? (
                 <FullscreenExit />
@@ -129,6 +137,7 @@ export default class ToolbarComponent extends Component {
               className="navButton"
               onClick={this.leaveSession}
               id="navLeaveButton"
+              disabled={!this.props.isLoaded}
             >
               <CallEndIcon />
             </IconButton>
@@ -136,6 +145,7 @@ export default class ToolbarComponent extends Component {
               color="inherit"
               onClick={this.toggleChat}
               id="navChatButton"
+              disabled={!this.props.isLoaded}
             >
               {this.props.showNotification && <div id="point" className="" />}
               <Tooltip title="Chat">

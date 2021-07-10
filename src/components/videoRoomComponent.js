@@ -41,6 +41,7 @@ class VideoRoomComponent extends Component {
       localUser: undefined,
       subscribers: [],
       chatDisplay: 'none',
+      isLoaded: false,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -56,6 +57,7 @@ class VideoRoomComponent extends Component {
     this.toggleChat = this.toggleChat.bind(this);
     this.checkNotification = this.checkNotification.bind(this);
     this.checkSize = this.checkSize.bind(this);
+    this.connectWebCam = this.connectWebCam.bind(this);
   }
 
   componentDidMount() {
@@ -186,6 +188,7 @@ class VideoRoomComponent extends Component {
     localUser.setConnectionId(this.state.session.connection.connectionId);
     localUser.setScreenShareActive(false);
     localUser.setStreamManager(publisher);
+    this.setState({ isLoaded: true });
     this.subscribeToUserChanged();
     this.subscribeToStreamDestroyed();
     this.sendSignalUserChanged({
@@ -535,6 +538,7 @@ class VideoRoomComponent extends Component {
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
                   messageReceived={this.checkNotification}
+                  isLoaded={this.state.isLoaded}
                 />
               </div>
             )}
@@ -550,6 +554,7 @@ class VideoRoomComponent extends Component {
           toggleFullscreen={this.toggleFullscreen}
           leaveSession={this.leaveSession}
           toggleChat={this.toggleChat}
+          isLoaded={this.state.isLoaded}
         />
       </div>
     );
