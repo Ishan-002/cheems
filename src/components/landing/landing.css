@@ -1,0 +1,44 @@
+img {
+  height: 25rem;
+  width: auto;
+}
+
+.carousel {
+  padding: 0;
+  right: 0;
+  margin-right: 0;
+  width: inherit;
+  height: 100vh;
+  padding-top: 5rem;
+  margin-right: 0.5rem;
+}
+
+.landing {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+#app-name {
+  color: #abb2bf;
+  font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 3rem;
+  margin-top: 8rem;
+}
+
+.text {
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  margin-left: 1.5rem;
+}
+
+#buttons {
+  margin-top: 9rem;
+  display: flex;
+  justify-content: space-around;
+}
