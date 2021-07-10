@@ -1,6 +1,6 @@
 #header {
   color: #ffffff;
-  background-color: #333333;
+  background-color: #282c34;
   padding: 0 14px 0 0;
   position: absolute;
   top: 0;
@@ -49,7 +49,7 @@ body {
 }
 
 .bounds {
-  background-color: #494949;
+  /* background-color: #000000; */
   overflow: hidden;
   position: absolute;
   left: 0;
