@@ -1,43 +1,73 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import VideoCallImage from '../../assets/video-call.svg';
+import ChatImage from '../../assets/chat.svg';
+import UserProfileImage from '../../assets/user-profile.svg';
+import MeetingImage from '../../assets/team-meeting.svg';
+import './landing.css';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
+const LandingCarousel = () => {
+  return (
+    <Carousel
+      className="carousel"
+      autoPlay={true}
+      infiniteLoop={true}
+      showThumbs={false}
+      showArrows={false}
+      showIndicators={false}
+      showStatus={false}
+      interval={6000}
+    >
+      <img src={VideoCallImage} />
+      <img src={ChatImage} />
+      <img src={UserProfileImage} />
+      <img src={MeetingImage} />
+    </Carousel>
+  );
+};
 
 const Landing = () => {
   return (
-    <div style={{ height: '75vh' }} className="container valign-wrapper">
-      <div className="row">
-        <div className="col s12 center-align">
-          <h4 style={{ color: 'white' }}>
-            <b>Cheems:</b> an MS Teams clone
-          </h4>
+    <div className="landing">
+      <div className="container valign-wrapper">
+        <div className="row text">
+          <div id="app-name">Cheems: an MS Teams clone</div>
           <br />
-          <div className="col s6">
-            <Link
-              to="/register"
-              style={{
-                width: '140px',
-                borderRadius: '3px',
-                letterSpacing: '1.5px',
-              }}
-              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-            >
-              Register
-            </Link>
-          </div>
-          <div className="col s6">
-            <Link
-              to="/login"
-              style={{
-                width: '140px',
-                borderRadius: '3px',
-                letterSpacing: '1.5px',
-              }}
-              className="btn btn-large btn-flat waves-effect white black-text"
-            >
-              Log In
-            </Link>
+          <div id="buttons">
+            <div className="col s5">
+              <Link
+                to="/register"
+                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                style={{
+                  width: '150px',
+                  borderRadius: '3px',
+                  letterSpacing: '1.5px',
+                  fontFamily: 'Segoe UI',
+                }}
+              >
+                Register
+              </Link>
+            </div>
+            <div className="col s6">
+              <Link
+                to="/login"
+                className="btn btn-large btn-flat waves-effect white black-text"
+                style={{
+                  width: '150px',
+                  borderRadius: '3px',
+                  // letterSpacing: '1.5px',
+                  fontFamily: 'Segoe UI',
+                }}
+              >
+                Log In
+              </Link>
+            </div>
           </div>
         </div>
       </div>
+      <LandingCarousel />
     </div>
   );
 };

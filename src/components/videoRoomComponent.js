@@ -6,7 +6,7 @@ import StreamComponent from './stream/streamComponent';
 import ChatComponent from './chat/chatComponent';
 import { Context } from '../store/store';
 
-import OpenViduLayout from '../layout/openvidu-layout';
+import VideoCallLayout from '../layout/openvidu-layout';
 import UserModel from '../models/user-model';
 import ToolbarComponent from './toolbar/toolbarComponent';
 
@@ -21,17 +21,17 @@ class VideoRoomComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.SERVER_URL = process.env.OPENVIDU_SERVER_SECRET;
-    this.OPENVIDU_SERVER_SECRET = process.env.OPENVIDU_SERVER_SECRET;
+    this.SERVER_URL = process.env.REACT_APP_SERVER_URL;
+    this.OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET;
     this.hasBeenUpdated = false;
-    this.layout = new OpenViduLayout();
+    this.layout = new VideoCallLayout();
 
     let sessionName = this.props.sessionName
       ? this.props.sessionName
       : 'SessionA';
     let userName = this.props.username
       ? this.props.username
-      : 'OpenVidu_User' + Math.floor(Math.random() * 100);
+      : 'User_' + Math.floor(Math.random() * 100);
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
@@ -41,6 +41,7 @@ class VideoRoomComponent extends Component {
       localUser: undefined,
       subscribers: [],
       chatDisplay: 'none',
+      isLoaded: false,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -56,6 +57,7 @@ class VideoRoomComponent extends Component {
     this.toggleChat = this.toggleChat.bind(this);
     this.checkNotification = this.checkNotification.bind(this);
     this.checkSize = this.checkSize.bind(this);
+    this.connectWebCam = this.connectWebCam.bind(this);
   }
 
   componentDidMount() {
@@ -186,6 +188,7 @@ class VideoRoomComponent extends Component {
     localUser.setConnectionId(this.state.session.connection.connectionId);
     localUser.setScreenShareActive(false);
     localUser.setStreamManager(publisher);
+    this.setState({ isLoaded: true });
     this.subscribeToUserChanged();
     this.subscribeToStreamDestroyed();
     this.sendSignalUserChanged({
@@ -235,7 +238,7 @@ class VideoRoomComponent extends Component {
       session: undefined,
       subscribers: [],
       mySessionId: 'SessionA',
-      myUserName: 'OpenVidu_User' + Math.floor(Math.random() * 100),
+      myUserName: 'User_' + Math.floor(Math.random() * 100),
       localUser: undefined,
     });
     if (this.props.leaveSession) {
@@ -502,19 +505,6 @@ class VideoRoomComponent extends Component {
 
     return (
       <div className="container" id="container">
-        <ToolbarComponent
-          sessionId={mySessionId}
-          user={localUser}
-          showNotification={this.state.messageReceived}
-          camStatusChanged={this.camStatusChanged}
-          micStatusChanged={this.micStatusChanged}
-          screenShare={this.screenShare}
-          stopScreenShare={this.stopScreenShare}
-          toggleFullscreen={this.toggleFullscreen}
-          leaveSession={this.leaveSession}
-          toggleChat={this.toggleChat}
-        />
-
         <div id="layout" className="bounds">
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
@@ -548,10 +538,24 @@ class VideoRoomComponent extends Component {
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
                   messageReceived={this.checkNotification}
+                  isLoaded={this.state.isLoaded}
                 />
               </div>
             )}
         </div>
+        <ToolbarComponent
+          sessionId={mySessionId}
+          user={localUser}
+          showNotification={this.state.messageReceived}
+          camStatusChanged={this.camStatusChanged}
+          micStatusChanged={this.micStatusChanged}
+          screenShare={this.screenShare}
+          stopScreenShare={this.stopScreenShare}
+          toggleFullscreen={this.toggleFullscreen}
+          leaveSession={this.leaveSession}
+          toggleChat={this.toggleChat}
+          isLoaded={this.state.isLoaded}
+        />
       </div>
     );
   }
