@@ -19,6 +19,12 @@ const UserSchema = new schema({
     type: String,
     required: true,
   },
+  teams: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Team',
+    },
+  ],
 });
 
 // Hashing password before storing it
