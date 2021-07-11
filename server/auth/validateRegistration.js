@@ -3,12 +3,12 @@ module.exports = function validateRegistrationData(data) {
 
   // Name checks
   if (data.username != '') {
-    const regex = /^[a-zA-Z ,.'-]+$/i;
+    const regex = /^[a-zA-Z -]+$/i;
     if (!regex.test(String(data.username))) {
-      errors.username = 'Please enter a valid username';
+      errors.username = 'Username should only have alphabets and hyphen(-)';
     }
   } else {
-    errors.username = 'username cannot be empty';
+    errors.username = 'Username cannot be empty';
   }
 
   // Email checks
@@ -46,7 +46,7 @@ module.exports = function validateRegistrationData(data) {
   if (Object.keys(errors).length === 0) {
     valid = true;
   }
-
+  console.log(errors);
   return {
     errors,
     isValid: valid,
