@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const users = require('./routes/users');
 const sessions = require('./routes/open-vidu/session');
+const teams = require('./routes/teams');
 
 // loading env file
 require('dotenv').config();
@@ -41,6 +42,7 @@ app.get('/', (req, res) => {
 // Routes
 app.use('/api/users', users);
 app.use('/api/session', sessions);
+app.use('/api/teams', teams);
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
