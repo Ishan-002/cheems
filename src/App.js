@@ -24,19 +24,19 @@ const useStyles = makeStyles({
 });
 
 function App() {
-  const [state, dispatch] = useContext(Context);
+  const [user, dispatch] = useContext(Context);
   const classes = useStyles();
   useEffect(() => {
     const token = getCookie('token');
     if (token) {
       loginUserWithToken(token)
         .then((res) => {
-          const user = {
+          const newUser = {
             username: res.user.username,
             email: res.user.email,
             login: true,
           };
-          dispatch({ type: 'SET_USER', payload: user });
+          dispatch({ type: 'SET_USER', payload: newUser });
         })
         .catch(() => {
           removeCookie('token');
@@ -52,13 +52,13 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            {state.login ? <Home /> : <Landing />}
+            {user.login ? <Home /> : <Landing />}
           </Route>
           <Route exact path="/login">
-            {state.login ? <Home /> : <SignIn />}
+            {user.login ? <Home /> : <SignIn />}
           </Route>
           <Route exact path="/register">
-            {state.login ? <Home /> : <SignUp />}
+            {user.login ? <Home /> : <SignUp />}
           </Route>
         </Switch>
       </Router>
