@@ -8,7 +8,7 @@ const validateRegistration = require('../auth/validateRegistration');
 const validateLogin = require('../auth/validateLogin');
 
 // Load User model
-const User = require('../models/User');
+const User = require('../models/user');
 
 // @route POST api/users/register
 // @desc Register user
@@ -17,14 +17,14 @@ router.post('/register', (req, res) => {
   // Form validation
   console.log('Registration of the form has started');
 
-  const { formErrors, isValid } = validateRegistration(req.body);
+  const { errors, isValid } = validateRegistration(req.body);
   // Check validation
   console.log('Errors in the validation are...');
-  console.log(formErrors);
+  console.log(errors);
   console.log(`The form is valid: ${isValid}`);
 
   if (!isValid) {
-    return res.status(400).json({ error: 'Bad request, please try again.' });
+    return res.status(400).json(errors);
   }
 
   User.findOne({
@@ -79,14 +79,14 @@ router.post('/register', (req, res) => {
 // @access Public
 router.post('/login', (req, res) => {
   // Form validation
-  const { formErrors, isValid } = validateLogin(req.body);
+  const { errors, isValid } = validateLogin(req.body);
 
   // Check validation
   console.log('Errors in the validation are...');
-  console.log(formErrors);
+  console.log(errors);
   console.log(`The form is valid: ${isValid}`);
   if (!isValid) {
-    return res.status(400).json({ error: 'Bad request, please try again.' });
+    return res.status(400).json(errors);
   }
 
   const email = req.body.email;
