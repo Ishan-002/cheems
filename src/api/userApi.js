@@ -31,17 +31,24 @@ export function loginUser(user) {
       if (response.status == 200) {
         setCookie('token', res.token);
         window.location.href = '/';
-      } else if (response.status == 400) {
-        if (res.error) {
-          alert(res.error);
+      }
+    })
+    .catch((error) => {
+      const response = error.response;
+      const res = response.data;
+      if (response.status == 400) {
+        if (res) {
+          let out = '';
+          for (let keys in res) {
+            out += res[keys] + '\n';
+          }
+          alert(out);
         } else {
           alert('Bad request, please try again.');
         }
       } else if (response.status == 500) {
         alert('There was some error with the server, please try again.');
       }
-    })
-    .catch((error) => {
       console.log(error);
     });
 }
@@ -61,10 +68,15 @@ export function RegisterUser(user) {
     })
     .catch((error) => {
       const response = error.response;
+      console.log(error.response.data);
       const res = response.data;
       if (response.status == 400) {
-        if (res.error) {
-          alert(res.error);
+        if (res) {
+          let out = '';
+          for (let keys in res) {
+            out += res[keys] + '\n';
+          }
+          alert(out);
         } else {
           alert('Bad request, please try again.');
         }
