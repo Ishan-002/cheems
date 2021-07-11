@@ -10,12 +10,11 @@ img {
   width: inherit;
   height: 100vh;
   padding-top: 5rem;
-  margin-right: 0.5rem;
 }
 
 .landing {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   position: absolute;
   top: 0;

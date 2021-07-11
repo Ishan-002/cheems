@@ -18,7 +18,8 @@ const LandingCarousel = () => {
       showArrows={false}
       showIndicators={false}
       showStatus={false}
-      interval={6000}
+      interval={4000}
+      stopOnHover={false}
     >
       <img src={VideoCallImage} />
       <img src={ChatImage} />

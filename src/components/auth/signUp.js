@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { RegisterUser } from '../../api/userApi';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -143,7 +144,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link to="/login" variant="body2" component={RouterLink}>
                 Already have an account? Sign in
               </Link>
             </Grid>
