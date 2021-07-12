@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {ObjectID} = require('mongodb');
+const { ObjectID } = require('mongodb');
 const Team = require('../models/team');
 
 const middleware = {};
@@ -15,32 +15,32 @@ middleware.isTeamParticipant = (req, res, next) => {
   if (!ObjectID.isValid(req.params.id)) {
     return res.status(400).send();
   }
-  User.findOne({username})
-      .then((user) => {
-        if (!user) {
-          return res.status(400).send();
-        }
-        Team.findById(ObjectID(req.params.id))
-            .then((team) => {
-              if (!team) {
-                return res.status(400).send();
-              }
-              for (let i = 0; i < team.participants.length; i++) {
-                if (team.participants[i].equals(ObjectID(user._id))) {
-                  return next();
-                }
-              }
-              res.redirect('/team/join/' + team._id);
-            })
-            .catch((error) => {
-              console.log(error);
-              return res.status(500).send();
-            });
-      })
-      .catch((e) => {
-        console.log(e);
-        return res.status(500).send();
-      });
+  User.findOne({ username })
+    .then((user) => {
+      if (!user) {
+        return res.status(400).send();
+      }
+      Team.findById(ObjectID(req.params.id))
+        .then((team) => {
+          if (!team) {
+            return res.status(400).send();
+          }
+          for (let i = 0; i < team.participants.length; i++) {
+            if (team.participants[i].equals(ObjectID(user._id))) {
+              return next();
+            }
+          }
+          res.redirect('/team/join/' + team._id);
+        })
+        .catch((error) => {
+          console.log(error);
+          return res.status(500).send();
+        });
+    })
+    .catch((e) => {
+      console.log(e);
+      return res.status(500).send();
+    });
 };
 
 // middleware.isChannelCreator = (req, res, next) => {
