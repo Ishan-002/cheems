@@ -16,16 +16,15 @@ const PORT = process.env.PORT || 3001;
 
 // connecting mongoDB to server
 mongoose.connect(
-  mongo_uri,
-  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
-  function (err) {
-    if (err) {
-      throw err;
-    } else {
-      console.log(`Successfully connected to ${mongo_uri}`);
-    }
-  }
-);
+    mongo_uri,
+    {useNewUrlParser : true, useUnifiedTopology : true, useCreateIndex : true},
+    function(err) {
+      if (err) {
+        throw err;
+      } else {
+        console.log(`Successfully connected to ${mongo_uri}`);
+      }
+    });
 
 const app = express();
 // use something like this. Refer: https://expressjs.com/en/5x/api.html
@@ -33,12 +32,10 @@ const app = express();
 app.use(cors());
 // app.options('*', cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended : false}));
 app.use(cookieParser());
 // console.log('app is first');
-app.get('/', (req, res) => {
-  res.send('Welcome');
-});
+app.get('/', (req, res) => { res.send('Welcome'); });
 // Routes
 app.use('/api/users', users);
 app.use('/api/session', sessions);
@@ -48,6 +45,4 @@ app.use(passport.initialize());
 // Passport config
 require('./config/passport')(passport);
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+app.listen(PORT, () => { console.log(`Server listening on ${PORT}`); });
