@@ -85,3 +85,22 @@ export function RegisterUser(user) {
       }
     });
 }
+
+export function getTeamDetails(teamId, username) {
+  return axiosInstance
+    .get(`/teams/${username}/${teamId}`)
+    .then((response) => {
+      console.log(response);
+      if (response.status == 200) {
+        return Promise(response.data);
+      }
+      return new Error();
+    })
+    .catch((error) => {
+      const response = error.response;
+      const res = response.data;
+      console.log(res);
+      console.log(error);
+      return new Error();
+    });
+}

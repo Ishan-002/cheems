@@ -34,7 +34,10 @@ const Landing = () => {
     <div className="landing">
       <div className="container valign-wrapper">
         <div className="row text">
-          <div id="app-name">Cheems: an MS Teams clone</div>
+          <div id="app-name">
+            <h1>Cheems</h1>
+            <p>An MS Teams clone</p>
+          </div>
           <br />
           <div id="buttons">
             <div className="col s5">

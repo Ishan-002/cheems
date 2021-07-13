@@ -21,7 +21,7 @@ const UserSchema = new schema({
   },
   teams: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: schema.Types.ObjectId,
       ref: 'Team',
     },
   ],

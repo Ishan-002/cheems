@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
+const schema = mongoose.Schema;
 
-const MessageSchema = new mongoose.Schema({
+const MessageSchema = new schema({
   text: {
     type: String,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: schema.Types.ObjectId,
     ref: 'User',
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
 });
 
 module.exports = mongoose.model('Message', MessageSchema);
