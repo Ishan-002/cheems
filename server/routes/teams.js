@@ -15,13 +15,13 @@ router.post('/new', (req, res) => {
   const username = req.body.username;
   User.findOne({ username }).then((user) => {
     if (!user) {
-      return res.status(400).send();
+      return res.status(400).send('');
     }
 
     const newTeam = new Team({
-      creator: req.body.username,
+      // creator: req.body.username,
       teamName: req.body.teamName,
-      participants: [user._id],
+      // participants: [user._id],
     });
     console.log(newTeam);
 
@@ -30,7 +30,7 @@ router.post('/new', (req, res) => {
         user.teams.push(team._id);
         user.save();
         console.log(user);
-        // team.participants.push(user._id);
+        team.participants.push(user._id);
         // rChannel.online
         console.log(team);
         team.save();
@@ -116,14 +116,16 @@ router.post('/join/:id', (req, res) => {
 });
 
 // @route GET api/teams/:id
-// @desc Get the content to load in the team page
+// @desc Get all the content to load in the team page
+// bande ke saare channels dikhte hain
 // @access Public
 router.get(
-  '/:id',
+  '/:username/:id',
   // middleware.isLogedIn,
   middleware.isTeamParticipant,
   (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
+      console.log('id is not valid');
       return res.status(400).send();
       // return res.redirect('/');
     }
@@ -138,17 +140,17 @@ router.get(
           return res.status(400).send('Team not found');
           // return res.redirect('/');
         }
-        const username = req.body.username;
+        const username = req.params.username;
         User.findOne({ username })
           .populate('teams')
           .then((user) => {
             res.status(200).json({ team: team, userTeams: user.teams });
-            res.render('chat', {
-              channel: rChannel,
-              channels: rUser.channels,
-              title: rChannel.channel_name,
-              // moment, something related to measuring the time at this point
-            });
+            // res.render('chat', {
+            //   channel: rChannel,
+            //   channels: rUser.channels,
+            //   title: rChannel.channel_name,
+            //   // moment, something related to measuring the time at this point
+            // });
           });
       })
       .catch((error) => {
