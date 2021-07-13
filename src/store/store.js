@@ -5,6 +5,7 @@ const initialState = {
   login: false,
   username: '',
   email: '',
+  teams: [],
 };
 
 const Store = ({ children }) => {

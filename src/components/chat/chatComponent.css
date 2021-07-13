@@ -196,3 +196,17 @@ span.triangle {
 .chatComponentLight ::-webkit-scrollbar-thumb {
   background-color: #eeeeee !important;
 }
+
+.chat-form {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  height: 2.2rem;
+}
+
+.chat {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}

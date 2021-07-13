@@ -6,6 +6,7 @@ const middleware = require('../middleware/middleware');
 
 const Team = require('../models/team');
 const User = require('../models/user');
+const Message = require('../models/message');
 
 // @route POST api/teams/new
 // @desc Create a new team
@@ -131,7 +132,7 @@ router.get(
     }
 
     Team.findById(ObjectID(req.params.id))
-      .populate({ path: 'message', populate: { path: 'author' } })
+      .populate('messages')
       .populate('participants')
       .limit(10)
       .sort({ date: -1 })
