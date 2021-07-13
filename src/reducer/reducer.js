@@ -6,6 +6,7 @@ const Reducer = (state, action) => {
         login: true,
         username: action.payload.username,
         email: action.payload.email,
+        teams: action.payload.teams,
       };
     case 'RESET_APP':
       return {
@@ -13,6 +14,7 @@ const Reducer = (state, action) => {
         login: false,
         username: '',
         email: '',
+        teams: [],
       };
     default:
       return state;

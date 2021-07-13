@@ -8,7 +8,6 @@ import Home from './components/home/home';
 import { loginUserWithToken } from './api/userApi';
 import { Context } from './store/store';
 import { getCookie, removeCookie } from './utils/handleCookies';
-import { loadTheme } from '@fluentui/react';
 import { ThemeOptions } from './themes';
 import { createTheme, ThemeProvider, makeStyles } from '@material-ui/core';
 import SignIn from './components/auth/signIn';
@@ -35,7 +34,13 @@ function App() {
             username: res.user.username,
             email: res.user.email,
             login: true,
+            teams: res.user.teams,
           };
+          console.log(newUser);
+          // console.log(typeof(newUser.username));
+          // console.log(typeof(newUser.email));
+          // console.log(typeof(newUser.username));
+          // console.log(typeof(newUser.username));
           dispatch({ type: 'SET_USER', payload: newUser });
         })
         .catch(() => {
