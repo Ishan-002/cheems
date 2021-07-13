@@ -1,0 +1,6 @@
+.team-top-bar {
+  display: flex;
+  justify-content: space-between;
+  right: 0;
+  padding-right: 0;
+}

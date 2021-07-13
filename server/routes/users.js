@@ -94,6 +94,7 @@ router.post('/login', (req, res) => {
 
   // Find user by email
   User.findOne({ email })
+    .populate('teams')
     .then((user) => {
       // Check if user exists
       if (!user) {
@@ -110,6 +111,7 @@ router.post('/login', (req, res) => {
             const payload = {
               email: user.email,
               name: user.username,
+              teams: user.teams,
             };
             // Sign JWT token
             jwt.sign(
@@ -136,7 +138,7 @@ router.post('/login', (req, res) => {
 });
 
 // @route GET api/users/login
-// @desc Login user and return JWT token
+// @desc Get user information from JWT token given by client
 // @access Public
 router.get('/login', (req, res) => {
   let header = req.header('authorization');
@@ -145,6 +147,7 @@ router.get('/login', (req, res) => {
   try {
     const email = decodedJWT.email;
     User.findOne({ email })
+      .populate('teams')
       .then((user) => {
         if (user) {
           res.status(200).json({ user });

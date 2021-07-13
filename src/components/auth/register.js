@@ -1,115 +1,106 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { RegisterUser } from '../../api/userApi';
+/* import * as Yup from 'yup';
+import { useState } from 'react';
+import { Icon } from '@iconify/react';
+import { useFormik, Form, FormikProvider } from 'formik';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import { useNavigate } from 'react-router-dom';
+// material
+import {
+  Stack,
+  TextField,
+  IconButton,
+  InputAdornment,
+} from '@material-ui/core';
+import { LoadingButton } from '@material-ui/lab';
 
-const Register = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
-  // const [errors, setErrors] = useState({});
+// ----------------------------------------------------------------------
 
-  const handleChange = (e) => {
-    const id = e.target.id;
-    if (id == 'email') {
-      setEmail(e.target.value);
-    } else if (id == 'username') {
-      setUsername(e.target.value);
-    } else if (id == 'password') {
-      setPassword(e.target.value);
-    } else if (id == 'password2') {
-      setPassword2(e.target.value);
-    }
-  };
+export default function RegisterForm() {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newUser = {
-      username: username,
-      email: email,
-      password: password,
-      password2: password2,
-    };
-    console.log(newUser);
-    RegisterUser(newUser);
-  };
+  const RegisterSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .min(2, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Username require'),
+    email: Yup.string()
+      .email('Email must be a valid email address')
+      .required('Email is required'),
+    password: Yup.string().required('Password is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
+    validationSchema: RegisterSchema,
+    onSubmit: () => {
+      navigate('/dashboard', { replace: true });
+    },
+  });
+
+  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col s8 offset-s2">
-          <Link to="/" className="btn-flat waves-effect">
-            <i className="material-icons left">keyboard_backspace</i> Back to
-            home
-          </Link>
-          <div className="col s12" style={{ paddingLeft: '11.250px' }}>
-            <h4 style={{ color: 'white' }}>
-              <b>Register</b> below
-            </h4>
-            <p className="grey-text text-darken-1">
-              Already have an account? <Link to="/login">Log in</Link>
-            </p>
-          </div>
-          <form noValidate onSubmit={handleSubmit}>
-            <div className="input-field col s12">
-              <input
-                onChange={handleChange}
-                value={username}
-                //error={errors.name}
-                id="username"
-                type="text"
-              />
-              <label htmlFor="name">Name</label>
-            </div>
-            <div className="input-field col s12">
-              <input
-                onChange={handleChange}
-                value={email}
-                //error={errors.email}
-                id="email"
-                type="email"
-              />
-              <label htmlFor="email">Email</label>
-            </div>
-            <div className="input-field col s12">
-              <input
-                onChange={handleChange}
-                value={password}
-                //error={errors.password}
-                id="password"
-                type="password"
-              />
-              <label htmlFor="password">Password</label>
-            </div>
-            <div className="input-field col s12">
-              <input
-                onChange={handleChange}
-                value={password2}
-                //error={errors.password2}
-                id="password2"
-                type="password"
-              />
-              <label htmlFor="password2">Confirm Password</label>
-            </div>
-            <div className="col s12" style={{ paddingLeft: '11.250px' }}>
-              <button
-                style={{
-                  width: '150px',
-                  borderRadius: '3px',
-                  letterSpacing: '1.5px',
-                  marginTop: '1rem',
-                }}
-                type="submit"
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              >
-                Sign up
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-};
+    <FormikProvider value={formik}>
+      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Stack spacing={3}>
+          <TextField
+            fullWidth
+            label="Username"
+            {...getFieldProps('username')}
+            error={Boolean(touched.firstName && errors.firstName)}
+            helperText={touched.firstName && errors.firstName}
+          />
 
-export default Register;
+          <TextField
+            fullWidth
+            autoComplete="email"
+            type="email"
+            label="Email address"
+            {...getFieldProps('email')}
+            error={Boolean(touched.email && errors.email)}
+            helperText={touched.email && errors.email}
+          />
+
+          <TextField
+            fullWidth
+            autoComplete="current-password"
+            type={showPassword ? 'text' : 'password'}
+            label="Password"
+            {...getFieldProps('password')}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    edge="end"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            error={Boolean(touched.password && errors.password)}
+            helperText={touched.password && errors.password}
+          />
+
+          <LoadingButton
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
+            Register
+          </LoadingButton>
+        </Stack>
+      </Form>
+    </FormikProvider>
+  );
+}
+*/

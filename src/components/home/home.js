@@ -10,6 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import { removeCookie } from '../../utils/handleCookies';
+import ResponsiveDrawer from '../team/team';
 
 const Home = () => {
   const [inCall, setInCall] = useState(false);
@@ -50,7 +51,7 @@ const Home = () => {
     removeCookie('token');
     window.location.href = '/';
   };
-  
+
   if (inCall) {
     return (
       <VideoRoomComponent
@@ -59,6 +60,8 @@ const Home = () => {
         leaveSession={leaveSession}
       />
     );
+  } else if (user.teams.length !== 0) {
+    return <ResponsiveDrawer />;
   }
 
   return (

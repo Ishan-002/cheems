@@ -1,87 +1,116 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import * as Yup from 'yup';
+import { useState } from 'react';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 import { loginUser } from '../../api/userApi';
+import { useFormik, Form, FormikProvider } from 'formik';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+// material
+import {
+  Link,
+  Checkbox,
+  TextField,
+  IconButton,
+  InputAdornment,
+  FormControlLabel,
+  Button
+} from '@material-ui/core';
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
+export default function LoginForm() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
-  const handleChange = (e) => {
-    const id = e.target.id;
-    if (id == 'email') {
-      setEmail(e.target.value);
-    } else if (id == 'password') {
-      setPassword(e.target.value);
-    }
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string()
+      .email('Email must be a valid email address')
+      .required('Email is required'),
+    password: Yup.string().required('Password is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      remember: true,
+    },
+    validationSchema: LoginSchema,
+    onSubmit: () => {
+      const user = 
+      loginUser()
+      setRedirect(true);
+    },
+  });
+
+  const { errors, touched, values, handleSubmit, getFieldProps } =
+    formik;
+
+  const handleShowPassword = () => {
+    setShowPassword((show) => !show);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newUser = {
-      email: email,
-      password: password,
-    };
-    loginUser(newUser);
-    console.log(newUser);
-  };
+  if (redirect) {
+    return <Redirect to="/" />;
+  }
 
   return (
-    <div className="container">
-      <div style={{ marginTop: '4rem' }} className="row">
-        <div className="col s8 offset-s2">
-          <Link to="/" className="btn-flat waves-effect">
-            <i className="material-icons left">keyboard_backspace</i> Back to
-            home
-          </Link>
-          <div className="col s12" style={{ paddingLeft: '11.250px' }}>
-            <h4 style={{ color: 'white' }}>
-              <b>Login</b> below
-            </h4>
-            <p className="grey-text text-darken-1">
-              Don't have an account? <Link to="/register">Register</Link>
-            </p>
-          </div>
-          <form noValidate onSubmit={handleSubmit}>
-            <div className="input-field col s12">
-              <input
-                onChange={handleChange}
-                value={email}
-                error={errors.email}
-                id="email"
-                type="email"
-              />
-              <label htmlFor="email">Email</label>
-            </div>
-            <div className="input-field col s12">
-              <input
-                onChange={handleChange}
-                value={password}
-                error={errors.password}
-                id="password"
-                type="password"
-              />
-              <label htmlFor="password">Password</label>
-            </div>
-            <div className="col s12" style={{ paddingLeft: '11.250px' }}>
-              <button
-                style={{
-                  width: '150px',
-                  borderRadius: '3px',
-                  letterSpacing: '1.5px',
-                  marginTop: '1rem',
-                }}
-                type="submit"
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              >
-                Login
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-};
+    <FormikProvider value={formik}>
+      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <div>
+          <TextField
+            fullWidth
+            autoComplete="username"
+            type="email"
+            label="Email address"
+            {...getFieldProps('email')}
+            error={Boolean(touched.email && errors.email)}
+            helperText={touched.email && errors.email}
+          />
 
-export default Login;
+          <TextField
+            fullWidth
+            autoComplete="current-password"
+            type={showPassword ? 'text' : 'password'}
+            label="Password"
+            {...getFieldProps('password')}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleShowPassword} edge="end">
+                    {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            error={Boolean(touched.password && errors.password)}
+            helperText={touched.password && errors.password}
+          />
+        </div>
+
+        <div
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ my: 2 }}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                {...getFieldProps('remember')}
+                checked={values.remember}
+              />
+            }
+            label="Remember me"
+          />
+
+          <Link component={RouterLink} variant="subtitle2" to="#">
+            Forgot password?
+          </Link>
+        </div>
+
+        <Button variant="contained" type="submit" size="large">
+          Login
+        </Button>
+      </Form>
+    </FormikProvider>
+  );
+}

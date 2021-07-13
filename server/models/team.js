@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const schema = mongoose.Schema;
 
-const ChannelSchema = new mongoose.Schema({
+const TeamSchema = new schema({
   messages: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: schema.Types.ObjectId,
       ref: 'Message',
     },
   ],
@@ -13,7 +14,7 @@ const ChannelSchema = new mongoose.Schema({
   //   },
   participants: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: schema.Types.ObjectId,
       ref: 'User',
     },
   ],
@@ -31,4 +32,5 @@ const ChannelSchema = new mongoose.Schema({
   //   },
 });
 
-module.exports = mongoose.model('Channel', ChannelSchema);
+
+module.exports = mongoose.model('Team', TeamSchema);

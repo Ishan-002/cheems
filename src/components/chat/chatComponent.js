@@ -3,9 +3,60 @@ import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
 import HighlightOff from '@material-ui/icons/HighlightOff';
 import Send from '@material-ui/icons/Send';
+// const ChatMessage = (props) => {
+//   return (
+//     <div className="chat-message">
+//       <div className="author">{props.author}</div>
+//       <div className="time">{props.time}</div>
+//       <div className="message">{props.message}</div>
+//     </div>
+//   );
+// };
 
-import './chatComponent.css';
-import { Tooltip } from '@material-ui/core';
+// const Chat = (props) => {
+//   //useChat calls to our custom hook
+//   //it returns an object with messages and sending a message
+//   const { messages, setMessages } = useChat(props.teamId);
+//   const [openChannel, setOpenChannel] = useState(undefined);
+//   useEffect(() => {
+//     setMessages(props.messages);
+//     const socket = socketIOClient('http://localhost:3001/').connect();
+
+//     socket.on('message', function (data) {
+//       console.log(data.message);
+//       setMessages((messages) => [...messages, data.message]);
+
+//       // go to the bottom of the chat
+//       var element = document.getElementById('main-container');
+//       element.scrollTop = element.scrollHeight;
+//     });
+
+//     if (openChannel) {
+//       socket.emit('unsubscribe', openChannel);
+//       // document.getElementById(openChannel).style.backgroundColor = '';
+//     }
+//   });
+
+//   console.log(channel);
+
+//   setOpenChannel(channel);
+//   // document.getElementById(channel).style.backgroundColor = 'grey';
+//   socket.emit('subscribe', channel);
+//   loadMessages(channel);
+
+//   return (
+//     <div className="chat">
+//       <Messages messages={messages} />
+//       <MessageBox
+//         onSendMessage={(message) => {
+//           sendMessage(message);
+//         }}
+//       />
+//     </div>
+//   );
+// };
+
+// export default Chat;
 
 export default class ChatComponent extends Component {
   constructor(props) {
@@ -147,11 +198,11 @@ export default class ChatComponent extends Component {
               onChange={this.handleChange}
               onKeyPress={this.handlePressKey}
             />
-            <Tooltip title="Send message">
+            {/* <Tooltip title="Send message">
               <Fab size="small" id="sendButton" onClick={this.sendMessage}>
                 <Send />
               </Fab>
-            </Tooltip>
+            </Tooltip> */}
           </div>
         </div>
       </div>
