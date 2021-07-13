@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { RegisterUser } from '../../api/userApi';
 import { Link as RouterLink } from 'react-router-dom';
+import SignUpImage from '../../assets/signup.svg';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -69,6 +70,7 @@ export default function SignUp() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <img src={SignUpImage} />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />

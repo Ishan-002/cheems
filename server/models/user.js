@@ -44,15 +44,4 @@ UserSchema.pre('save', function (next) {
   }
 });
 
-// // checks if the entered password is same as the saved one
-// UserSchema.methods.isPasswordCorrect = (password, callback) => {
-//   bcrypt.compare(password, this.password, (err, same) => {
-//     if (err) {
-//       callback(err);
-//     } else {
-//       callback(err, same);
-//     }
-//   });
-// };
-
 module.exports = mongoose.model('User', UserSchema);

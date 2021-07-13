@@ -9,7 +9,6 @@ export default class UserVideoComponent extends Component {
 
   componentDidMount() {
     if (this.props && this.props.user.streamManager && !!this.videoRef) {
-      console.log('PROPS: ', this.props);
       this.props.user.getStreamManager().addVideoElement(this.videoRef.current);
     }
 
@@ -45,7 +44,7 @@ export default class UserVideoComponent extends Component {
         autoPlay={true}
         id={'video-' + this.props.user.getStreamManager().stream.streamId}
         ref={this.videoRef}
-        muted={this.props.mutedSound}
+        muted={this.props.isMuted}
       />
     );
   }

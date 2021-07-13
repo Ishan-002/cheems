@@ -21,9 +21,13 @@ const Messages = ({ messages }) => {
   let i = 0;
   return (
     <List>
+      <ListItem>
+        <ListItemText>Hey, how are you!</ListItemText>
+      </ListItem>
       {messages.map((messageObject) => [
         <ListItem alignItems="flex-start" key={++i}>
           <ListItemText
+            style={{ backgroundColor: '#ABB2', borderRadius: '20px', padding: '1rem'}}
             // className={classes.item}
             primary={
               <Fragment>

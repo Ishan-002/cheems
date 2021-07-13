@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './streamComponent.css';
 import UserVideoComponent from './userVideoComponent';
 
@@ -8,62 +8,49 @@ import VolumeUp from '@material-ui/icons/VolumeUp';
 import VolumeOff from '@material-ui/icons/VolumeOff';
 import IconButton from '@material-ui/core/IconButton';
 
-export default class StreamComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      mutedSound: false,
-    };
-    this.toggleSound = this.toggleSound.bind(this);
-  }
+const StreamComponent = (props) => {
+  const [isMuted, setisMuted] = useState(false);
 
-  toggleSound() {
-    this.setState({ mutedSound: !this.state.mutedSound });
-  }
+  const toggleSound = () => {
+    setisMuted({ isMuted: !isMuted });
+  };
 
-  render() {
-    return (
-      <div className="OT_widget-container">
-        <div className="nickname">
+  return (
+    <div className="OT_widget-container">
+      <div className="nickname">
+        <div>
+          <span id="nickname">{props.user.getNickname()}</span>
+        </div>
+      </div>
+
+      {props.user !== undefined &&
+      props.user.getStreamManager() !== undefined ? (
+        <div className="streamComponent">
+          <UserVideoComponent user={props.user} isMuted={isMuted} />
+          <div id="statusIcons">
+            {!props.user.isVideoActive() ? (
+              <div id="camIcon">
+                <VideocamOff id="statusCam" />
+              </div>
+            ) : null}
+
+            {!props.user.isAudioActive() ? (
+              <div id="micIcon">
+                <MicOff id="statusMic" />
+              </div>
+            ) : null}
+          </div>
           <div>
-            <span id="nickname">{this.props.user.getNickname()}</span>
+            {!props.user.isLocal() && (
+              <IconButton id="volumeButton" onClick={toggleSound}>
+                {isMuted ? <VolumeOff color="secondary" /> : <VolumeUp />}
+              </IconButton>
+            )}
           </div>
         </div>
+      ) : null}
+    </div>
+  );
+};
 
-        {this.props.user !== undefined &&
-        this.props.user.getStreamManager() !== undefined ? (
-          <div className="streamComponent">
-            <UserVideoComponent
-              user={this.props.user}
-              mutedSound={this.state.mutedSound}
-            />
-            <div id="statusIcons">
-              {!this.props.user.isVideoActive() ? (
-                <div id="camIcon">
-                  <VideocamOff id="statusCam" />
-                </div>
-              ) : null}
-
-              {!this.props.user.isAudioActive() ? (
-                <div id="micIcon">
-                  <MicOff id="statusMic" />
-                </div>
-              ) : null}
-            </div>
-            <div>
-              {!this.props.user.isLocal() && (
-                <IconButton id="volumeButton" onClick={this.toggleSound}>
-                  {this.state.mutedSound ? (
-                    <VolumeOff color="secondary" />
-                  ) : (
-                    <VolumeUp />
-                  )}
-                </IconButton>
-              )}
-            </div>
-          </div>
-        ) : null}
-      </div>
-    );
-  }
-}
+export default StreamComponent;

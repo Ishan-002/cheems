@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './toolbarComponent.css';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -18,143 +18,141 @@ import CallEndIcon from '@material-ui/icons/CallEnd';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 
 import IconButton from '@material-ui/core/IconButton';
+import { Button } from '@material-ui/core';
 
-export default class ToolbarComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { fullscreen: false };
-    this.camStatusChanged = this.camStatusChanged.bind(this);
-    this.micStatusChanged = this.micStatusChanged.bind(this);
-    this.startScreenShare = this.startScreenShare.bind(this);
-    this.stopScreenShare = this.stopScreenShare.bind(this);
-    this.toggleFullscreen = this.toggleFullscreen.bind(this);
-    this.leaveSession = this.leaveSession.bind(this);
-    this.toggleChat = this.toggleChat.bind(this);
-  }
+const ToolbarComponent = (props) => {
+  const [fullscreen, setFullscreen] = useState(false);
 
-  micStatusChanged() {
-    this.props.micStatusChanged();
-  }
+  const micStatusChanged = () => {
+    props.micStatusChanged();
+  };
 
-  camStatusChanged() {
-    this.props.camStatusChanged();
-  }
+  const camStatusChanged = () => {
+    props.camStatusChanged();
+  };
 
-  startScreenShare() {
-    this.props.screenShare();
-  }
+  const startScreenShare = () => {
+    props.screenShare();
+  };
 
-  stopScreenShare() {
-    this.props.stopScreenShare();
-  }
+  const stopScreenShare = () => {
+    props.stopScreenShare();
+  };
 
-  toggleFullscreen() {
-    this.setState({ fullscreen: !this.state.fullscreen });
-    this.props.toggleFullscreen();
-  }
+  const toggleFullscreen = () => {
+    setFullscreen(!fullscreen);
+    props.toggleFullscreen();
+  };
 
-  leaveSession() {
-    this.props.leaveSession();
-  }
+  const leaveSession = () => {
+    props.leaveSession();
+  };
 
-  toggleChat() {
-    this.props.toggleChat();
-  }
+  const toggleChat = () => {
+    props.toggleChat();
+  };
 
-  render() {
-    const mySessionId = this.props.sessionId;
-    const localUser = this.props.user;
-    return (
-      <AppBar className="toolbar" id="header">
-        <Toolbar className="toolbar">
-          <div id="navSessionInfo">{mySessionId}</div>
-          <div className="buttonsContent">
-            <IconButton
-              color="inherit"
-              className="navButton"
-              id="navMicButton"
-              onClick={this.micStatusChanged}
-              disabled={!this.props.isLoaded}
-            >
-              {localUser !== undefined && localUser.isAudioActive() ? (
-                <MicIcon />
-              ) : (
-                <MicOff color="secondary" />
-              )}
-            </IconButton>
-
-            <IconButton
-              color="inherit"
-              className="navButton"
-              id="navCamButton"
-              onClick={this.camStatusChanged}
-              disabled={!this.props.isLoaded}
-            >
-              {localUser !== undefined && localUser.isVideoActive() ? (
-                <Videocam />
-              ) : (
-                <VideocamOff color="secondary" />
-              )}
-            </IconButton>
-
-            <IconButton
-              color="inherit"
-              className="navButton"
-              onClick={this.startScreenShare}
-              disabled={!this.props.isLoaded}
-            >
-              {localUser !== undefined && localUser.isScreenShareActive() ? (
-                <PictureInPicture />
-              ) : (
-                <ScreenShare />
-              )}
-            </IconButton>
-
-            {localUser !== undefined && localUser.isScreenShareActive() && (
-              <IconButton
-                onClick={this.stopScreenShare}
-                id="navScreenButton"
-                disabled={!this.props.isLoaded}
-              >
-                <StopScreenShare color="secondary" />
-              </IconButton>
+  const localUser = props.user;
+  return (
+    <AppBar className="toolbar" id="header">
+      <Toolbar className="toolbar">
+        <Button
+          onClick={() => {
+            navigator.clipboard.writeText(props.sessionId);
+            alert('Invite code copied to clipboard');
+          }}
+        >
+          Invite
+        </Button>
+        {/* <div id="navSessionInfo">{props.sessionId}</div> */}
+        <div className="buttonsContent">
+          <IconButton
+            color="inherit"
+            className="navButton"
+            id="navMicButton"
+            onClick={micStatusChanged}
+            disabled={!props.isLoaded}
+          >
+            {localUser !== undefined && localUser.isAudioActive() ? (
+              <MicIcon />
+            ) : (
+              <MicOff color="secondary" />
             )}
+          </IconButton>
 
+          <IconButton
+            color="inherit"
+            className="navButton"
+            id="navCamButton"
+            onClick={camStatusChanged}
+            disabled={!props.isLoaded}
+          >
+            {localUser !== undefined && localUser.isVideoActive() ? (
+              <Videocam />
+            ) : (
+              <VideocamOff color="secondary" />
+            )}
+          </IconButton>
+
+          <IconButton
+            color="inherit"
+            className="navButton"
+            onClick={startScreenShare}
+            disabled={!props.isLoaded}
+          >
+            {localUser !== undefined && localUser.isScreenShareActive() ? (
+              <PictureInPicture />
+            ) : (
+              <ScreenShare />
+            )}
+          </IconButton>
+
+          {localUser !== undefined && localUser.isScreenShareActive() && (
             <IconButton
-              color="inherit"
-              className="navButton"
-              onClick={this.toggleFullscreen}
-              disabled={!this.props.isLoaded}
+              onClick={stopScreenShare}
+              id="navScreenButton"
+              disabled={!props.isLoaded}
             >
-              {localUser !== undefined && this.state.fullscreen ? (
-                <FullscreenExit />
-              ) : (
-                <Fullscreen />
-              )}
+              <StopScreenShare color="secondary" />
             </IconButton>
-            <IconButton
-              color="secondary"
-              className="navButton"
-              onClick={this.leaveSession}
-              id="navLeaveButton"
-              disabled={!this.props.isLoaded}
-            >
-              <CallEndIcon />
-            </IconButton>
-            <IconButton
-              color="inherit"
-              onClick={this.toggleChat}
-              id="navChatButton"
-              disabled={!this.props.isLoaded}
-            >
-              {this.props.showNotification && <div id="point" className="" />}
-              <Tooltip title="Chat">
-                <ChatBubbleIcon />
-              </Tooltip>
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-    );
-  }
-}
+          )}
+
+          <IconButton
+            color="inherit"
+            className="navButton"
+            onClick={toggleFullscreen}
+            disabled={!props.isLoaded}
+          >
+            {localUser !== undefined && fullscreen ? (
+              <FullscreenExit />
+            ) : (
+              <Fullscreen />
+            )}
+          </IconButton>
+          <IconButton
+            color="secondary"
+            className="navButton"
+            onClick={leaveSession}
+            id="navLeaveButton"
+            disabled={!props.isLoaded}
+          >
+            <CallEndIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            onClick={toggleChat}
+            id="navChatButton"
+            disabled={!props.isLoaded}
+          >
+            {props.showNotification && <div id="point" className="" />}
+            <Tooltip title="Chat">
+              <ChatBubbleIcon />
+            </Tooltip>
+          </IconButton>
+        </div>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default ToolbarComponent;

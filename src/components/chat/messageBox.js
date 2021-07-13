@@ -24,15 +24,14 @@ const MessageBox = (props) => {
   };
 
   return (
-    <form class="chat-form" autoComplete="off">
+    <form className="chat-form" autoComplete="off">
       <TextField
         id="filled"
         variant="filled"
-        // label="Write your message here"
         margin="normal"
-        // multiline
-        // fullWidth
-        // rows="4"
+        inputProps={{
+          style: { marginTop: 0 },
+        }}
         placeholder="Write your message here"
         inputRef={messageRef}
         onChange={(event) => setMessage(event.target.value)}
@@ -45,7 +44,12 @@ const MessageBox = (props) => {
         }}
         value={message}
       />
-      <Button variant="contained" color="primary" onClick={sendMessageClick}>
+      <Button
+        style={{ marginBottom: 0 }}
+        variant="contained"
+        color="primary"
+        onClick={sendMessageClick}
+      >
         Send
       </Button>
     </form>

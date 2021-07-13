@@ -16,7 +16,6 @@ router.post('/:sessionId', (req, res) => {
       // TODO: See openVidu roles and add roles for publisher and moderator according to the admin roles of user
     )
     .then((response) => {
-      // console.log(response.data);
       const connection = response.data;
       const connectionToken = connection.token;
       const connectionId = connection.connectionId;
@@ -26,7 +25,6 @@ router.post('/:sessionId', (req, res) => {
       });
     })
     .catch((error) => {
-      // console.log(error);
       return res.status(500).json({ error: 'Internal server error' });
     });
 });

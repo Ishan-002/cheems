@@ -33,79 +33,27 @@ const app = express();
 // use something like this. Refer: https://expressjs.com/en/5x/api.html
 // app.all('*', requireAuthentication)
 
-// var server = http.createServer(app);
-
-// server.listen(PORT);
-// require('./io/index')(io);
-
-// io.on('connection', (socket) => {
-//   let sessionUserId = '';
-//   let action;
-//   console.log('Connection established');
-//   getMostRecentMessages(teamId)
-//     .then((results) => {
-//       io.sockets.in(teamId).emit('mostRecentMessages', results.reverse());
-//     })
-//     .catch((error) => {
-//       socket.emit('mostRecentMessages', []);
-//     });
-
-// socket.on('join', (params, callback) => {
-//   socket.join(params.teamId);
-//   console.log('join here too');
-//   callback();
-// });
-
-//   socket.on('newChatMessage', (data) => {
-//     //send event to every single connected socket
-//     try {
-//       const message = new Message({
-//         author: data.author,
-//         text: data.text,
-//       });
-
-//       message
-//         .save()
-//         .then(() => {
-//           io.emit('newChatMessage', { author: data.author, text: data.text });
-//         })
-//         .catch((error) => console.log('error: ' + error));
-//     } catch (e) {
-//       console.log('error: ' + e);
-//     }
-//   });
-//   socket.on('disconnect', () => {
-//     console.log('connection disconnected');
-//   });
-// });
-
-// /**
-//  * get 10 last messages
-//  * @returns {Promise<Model[]>}
-//  */
-// async function getMostRecentMessages() {
-//   return await Message.find().sort({ _id: -1 }).limit(10);
-// }
-
 app.use(cors());
 // app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// console.log('app is first');
 app.get('/', (req, res) => {
   res.send('Welcome');
 });
+
 // Routes
 app.use('/api/users', users);
 app.use('/api/session', sessions);
 app.use('/api/teams', teams);
+
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
 require('./config/passport')(passport);
 
+// creating socket connection
 const server = http.createServer(app);
 const io = socketIO(server, {
   cors: {
@@ -117,6 +65,7 @@ server.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
+// socket listeners
 io.on('connection', function (socket) {
   console.log('connect');
 

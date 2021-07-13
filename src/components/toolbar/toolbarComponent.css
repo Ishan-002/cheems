@@ -15,10 +15,6 @@
 
 .navButton {
   width: auto;
-  /* position: absolute; */
-  /* left: 0; */
-  /* right: 0; */
-  /* min-width: 400px; */
 }
 
 .navButton:hover {
@@ -28,12 +24,7 @@
 #navChatButton {
   position: absolute;
   right: 10px;
-  /* top: 0; */
 }
-
-/* #session-title {
-  
-} */
 
 #point {
   width: 10px;
@@ -44,7 +35,6 @@
   border-radius: 50%;
   background-color: #ffa600;
   border: 1px solid #000;
-  /* z-index: 99999; */
 }
 .pointLight {
   border: 1px solid #ffffff !important;

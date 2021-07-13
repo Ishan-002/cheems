@@ -29,3 +29,11 @@
   /* padding: 0;
   margin: 0; */
 }
+
+.homepage {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 50%;
+  height: 50%;
+}

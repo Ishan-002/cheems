@@ -1,21 +1,15 @@
-import React, { Component, useContext, useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import { axiosInstance } from '../api/axiosInstance';
 import './videoRoomComponent.css';
 import { OpenVidu } from 'openvidu-browser';
 import StreamComponent from './stream/streamComponent';
 import ChatComponent from './chat/chatComponent';
-import { Context } from '../store/store';
 
 import VideoCallLayout from '../layout/openvidu-layout';
 import UserModel from '../models/user-model';
 import ToolbarComponent from './toolbar/toolbarComponent';
 
 let localUser = new UserModel();
-
-const VideoComponent = () => {
-  let user = useContext(Context);
-  return <VideoRoomComponent user={user}></VideoRoomComponent>;
-};
 
 class VideoRoomComponent extends Component {
   constructor(props) {
@@ -599,120 +593,3 @@ class VideoRoomComponent extends Component {
 }
 
 export default VideoRoomComponent;
-export { VideoComponent };
-
-// const LayoutOptions = {
-//   maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
-//   minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
-//   fixedRatio: false, // If this is true then the aspect ratio of the video is maintained and minRatio and maxRatio are ignored (default false)
-//   bigClass: 'OV_big', // The class to add to elements that should be sized bigger
-//   bigPercentage: 0.8, // The maximum percentage of space the big ones should take up
-//   bigFixedRatio: false, // fixedRatio for the big ones
-//   bigMaxRatio: 3 / 2, // The narrowest ratio to use for the big elements (default 2x3)
-//   bigMinRatio: 9 / 16, // The widest ratio to use for the big elements (default 16x9)
-//   bigFirst: true, // Whether to place the big one in the top left (true) or bottom right
-//   animate: true, // Whether you want to animate the transitions
-// };
-
-// const VideoRoomComponent = () => {
-//   const [user, dispatch] = useContext(Context);
-
-//   const [sessionID, setSessionID] = useState('');
-//   const [session, setSession] = useState(undefined);
-//   const [localUser, setLocalUser] = useState(undefined);
-//   const [subscribers, setSubscribers] = useState([]);
-//   const [chatDisplay, setChatDisplay] = useState('none');
-
-//   const layout = new OpenViduLayout();
-//   const OV = null;
-//   const remotes = [];
-//   const localUserAccessAllowed = false;
-
-//   useEffect(() => {
-//     layout.initLayoutContainer(
-//       document.getElementById('layout'),
-//       LayoutOptions
-//     );
-
-//     window.addEventListener('beforeunload', onbeforeunload);
-//     window.addEventListener('resize', updateLayout);
-//     window.addEventListener('resize', checkSize);
-
-//     joinSession();
-
-//     return function cleanup() {
-//       window.removeEventListener('beforeunload', onbeforeunload);
-//       window.removeEventListener('resize', updateLayout);
-//       window.removeEventListener('resize', checkSize);
-//       leaveSession();
-//     };
-//   });
-
-//   const onbeforeunload = (event) => {
-//     leaveSession();
-//   };
-//   const updateLayout = () => {};
-//   const checkSize = () => {};
-//   const joinSession = () => {
-//     OV = new OpenVidu();
-
-//     setSession(OV.initSession());
-//     subscribeToStreamCreated();
-//     connectToSession();
-//   };
-//   const connectToSession = () => {
-//     if (this.props.token !== undefined) {
-//       console.log('token received: ', this.props.token);
-//       this.connect(this.props.token);
-//     } else {
-//       this.getToken()
-//         .then((token) => {
-//           console.log(token);
-//           this.connect(token);
-//         })
-//         .catch((error) => {
-//           if (this.props.error) {
-//             this.props.error({
-//               error: error.error,
-//               messgae: error.message,
-//               code: error.code,
-//               status: error.status,
-//             });
-//           }
-//           console.log(
-//             'There was an error getting the token:',
-//             error.code,
-//             error.message
-//           );
-//           alert('There was an error getting the token:', error.message);
-//         });
-//     }
-//   };
-//   const leaveSession = () => {};
-//   const initSession = () => {};
-//   const subscribeToStreamCreated = () => {
-//     session.on('streamCreated', (event) => {
-//       const subscriber = session.subscribe(event.stream, undefined);
-//       // var subscribers = this.state.subscribers;
-//       subscriber.on('streamPlaying', (e) => {
-//         checkSomeoneShareScreen();
-//         subscriber.videos[0].video.parentElement.classList.remove(
-//           'custom-class'
-//         );
-//       });
-
-//       const newUser = new UserModel();
-//       newUser.setStreamManager(subscriber);
-//       newUser.setConnectionId(event.stream.connection.connectionId);
-//       newUser.setType('remote');
-//       const nickname = event.stream.connection.data.split('%')[0];
-//       newUser.setNickname(JSON.parse(nickname).clientData);
-//       remotes.push(newUser);
-//       if (localUserAccessAllowed) {
-//         updateSubscribers();
-//       }
-//     });
-//   };
-//   const checkSomeoneShareScreen = () => {};
-//   const updateSubscribers = () => {};
-// };

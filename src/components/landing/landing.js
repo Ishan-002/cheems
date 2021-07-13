@@ -33,7 +33,7 @@ const Landing = () => {
   return (
     <div className="landing">
       <div className="container valign-wrapper">
-        <div className="row text">
+        <div className="row starter-text">
           <div id="app-name">
             <h1>Cheems</h1>
             <p>An MS Teams clone</p>
@@ -61,7 +61,6 @@ const Landing = () => {
                 style={{
                   width: '150px',
                   borderRadius: '3px',
-                  // letterSpacing: '1.5px',
                   fontFamily: 'Segoe UI',
                 }}
               >

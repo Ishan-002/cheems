@@ -97,10 +97,38 @@ export function getTeamDetails(teamId, username) {
       return new Error();
     })
     .catch((error) => {
-      const response = error.response;
-      const res = response.data;
-      console.log(res);
       console.log(error);
       return new Error();
+    });
+}
+
+export function createTeam(teamName, username) {
+  return axiosInstance
+    .post('/teams/new', { teamName: teamName, username: username })
+    .then((response) => {
+      console.log(response);
+      if (response.status == 200) {
+        window.location.href = window.location.href;
+        return;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('There was some error in creating the team, please try again');
+    });
+}
+
+export function joinTeam(teamId, username) {
+  return axiosInstance
+    .post(`/teams/join/${teamId}`, { username: username })
+    .then((response) => {
+      if (response.status == 200) {
+        window.location.href = window.location.href;
+        return;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('There was some error in joining the team, please try again.');
     });
 }

@@ -7,7 +7,7 @@
 
 #chatToolbar {
   height: 30px;
-  background-color: #3d3d3d;
+  background-color: #383d48;
   box-sizing: border-box;
   font-weight: bold;
   font-size: 14px;
@@ -15,7 +15,7 @@
   padding-top: 4px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  color: #ffffff;
+  color: #abb2bf;
 }
 
 #closeButton {
@@ -25,7 +25,7 @@
 }
 
 #chatComponent {
-  background-color: #b8b8b8;
+  background-color: #cee6fa;
   position: absolute;
   z-index: 99999;
   top: 0;
@@ -47,17 +47,12 @@
 .message {
   position: relative;
   padding: 7px 0;
-}
-.user-img {
-  position: absolute;
-  border-radius: 45px;
-  width: 60px;
-  height: 60px;
-  top: 15px;
+  margin: 2px;
+  display: block;
 }
 
 .msg-detail {
-  width: calc(100% - 65px);
+  /* width: calc(100% - 65px); */
   display: inline-block;
 }
 
@@ -74,18 +69,18 @@
 
 .msg-content {
   position: relative;
-  margin-top: 5px;
+  /* margin-top: 5px;
   border-radius: 5px;
-  padding: 8px;
+  padding: 8px; */
   color: #000000;
   width: auto;
-  max-width: 80%;
+  /* max-width: 80%; */
 }
 
 span.triangle {
   border-radius: 2px;
-  height: 8px;
-  width: 8px;
+  /* height: 8px; */
+  /* width: 8px; */
   top: 12px;
   display: block;
   -webkit-transform: rotate(45deg);
@@ -94,8 +89,11 @@ span.triangle {
 }
 
 .text {
-  word-break: break-all;
+  /* word-break: break-all; */
   color: #000000;
+}
+.text p {
+  display: block;
 }
 
 /* Start message from other user */
@@ -114,8 +112,9 @@ span.triangle {
 }
 
 .message.left .msg-detail .msg-content {
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
   float: left;
+  display: block;
 }
 .message.left .msg-detail .msg-content span.triangle {
   background-color: #f0f0f0;
@@ -133,15 +132,15 @@ span.triangle {
 }
 .message.right .user-img {
   right: -5px;
-  border: 1px solid #c8ffe8ab;
+  /* border: 1px solid #c8ffe8ab; */
 }
 
 .message.right .msg-detail .msg-content {
-  background-color: #c8ffe8;
+  /* background-color: #c8ffe8; */
   float: right;
 }
 .message.right .msg-detail .msg-content span.triangle {
-  background-color: #c8ffe8;
+  /* background-color: #c8ffe8; */
   border-bottom-width: 0;
   border-left-width: 0;
   right: -5px;
@@ -156,7 +155,7 @@ span.triangle {
   background-color: #ffffff;
   text-align: center;
   padding: 10px 0px;
-  height: 30px;
+  height: 40px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
 }
@@ -174,8 +173,8 @@ span.triangle {
   background-color: #81e9b0;
   position: absolute;
   right: 10px;
-  top: 0;
-  bottom: 0;
+  /* top: 0; */
+  /* bottom: 0; */
   margin: auto;
   border: 1px solid #7ae2a9;
   box-shadow: none !important;
@@ -198,10 +197,11 @@ span.triangle {
 }
 
 .chat-form {
-  margin-top: auto;
-  display: flex;
-  flex-direction: row;
-  height: 2.2rem;
+  min-height: 2vh;
+  margin-bottom: 0;
+   /* display: flex; */
+  /* flex-direction: row; */
+  /* height: 2.2rem; */
 }
 
 .chat {

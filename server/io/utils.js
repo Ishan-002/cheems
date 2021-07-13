@@ -15,7 +15,7 @@ utils.saveMessage = function saveMessage(io, data) {
         return;
       }
       const msg = {
-        text: data.text,
+        text: data.message.text,
         author: user._id,
       };
       Message.create(msg)
@@ -24,8 +24,7 @@ utils.saveMessage = function saveMessage(io, data) {
             .then((team) => {
               team.messages.push(message);
               team.save();
-              // io.to(data.channelID).emit("newMessage", msg);
-              // io.to(data.teamId).emit('newMessage', message);
+              console.log('message successfully saved');
             })
             .catch((error) => {
               console.log(error);
