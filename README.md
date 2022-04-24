@@ -108,3 +108,6 @@ The exact color codes used in for the design is as follows:
 2. File upload can be supported in teams, which would also enable recordings to
    be done on meetings.
 3. A custom user profile page.
+
+## Name Credits
+Ketan Kumar Dongre ([@ketandongre](https://github.com/ketandongre))
